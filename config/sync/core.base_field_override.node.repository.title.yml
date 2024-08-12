@@ -1,0 +1,18 @@
+uuid: c3b03bac-7442-47e4-bc9d-59f2fef2bb91
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.repository
+id: node.repository.title
+field_name: title
+entity_type: node
+bundle: repository
+label: Name
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

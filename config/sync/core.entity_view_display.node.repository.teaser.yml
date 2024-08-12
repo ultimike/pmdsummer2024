@@ -1,0 +1,32 @@
+uuid: 918d2fdf-16e0-4ae2-82c9-7e134d41ae06
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.repository.field_description
+    - field.field.node.repository.field_hash
+    - field.field.node.repository.field_machine_name
+    - field.field.node.repository.field_number_of_issues
+    - field.field.node.repository.field_source
+    - field.field.node.repository.field_url
+    - node.type.repository
+  module:
+    - user
+id: node.repository.teaser
+targetEntityType: node
+bundle: repository
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_description: true
+  field_hash: true
+  field_machine_name: true
+  field_number_of_issues: true
+  field_source: true
+  field_url: true

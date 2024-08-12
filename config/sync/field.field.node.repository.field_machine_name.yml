@@ -1,0 +1,19 @@
+uuid: ded16edd-b2e0-4b9e-822f-a2c5e9d79b42
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_machine_name
+    - node.type.repository
+id: node.repository.field_machine_name
+field_name: field_machine_name
+entity_type: node
+bundle: repository
+label: 'Machine name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

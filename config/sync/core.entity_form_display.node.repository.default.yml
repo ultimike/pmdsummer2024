@@ -1,0 +1,70 @@
+uuid: fbf4d1dd-384f-48c2-8a58-e5e59d76bf95
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.repository.field_description
+    - field.field.node.repository.field_hash
+    - field.field.node.repository.field_machine_name
+    - field.field.node.repository.field_number_of_issues
+    - field.field.node.repository.field_source
+    - field.field.node.repository.field_url
+    - node.type.repository
+  module:
+    - path
+id: node.repository.default
+targetEntityType: node
+bundle: repository
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  field_description: true
+  field_hash: true
+  field_machine_name: true
+  field_number_of_issues: true
+  field_source: true
+  field_url: true
+  title: true

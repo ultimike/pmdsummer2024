@@ -1,0 +1,17 @@
+uuid: c97428b5-233c-4b9b-a2c2-2e9b9d105d62
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Repository
+type: repository
+description: 'Used by the DrupalEasy repositories module to hold repository metadata. '
+help: null
+new_revision: true
+preview_mode: 0
+display_submitted: false

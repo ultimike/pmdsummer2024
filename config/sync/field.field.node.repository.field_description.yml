@@ -1,0 +1,22 @@
+uuid: fac908e2-9047-4d90-87c8-8d92b7ae89e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.repository
+  module:
+    - text
+id: node.repository.field_description
+field_name: field_description
+entity_type: node
+bundle: repository
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long
