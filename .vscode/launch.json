@@ -1,16 +1,19 @@
 {
+  "version": "0.2.0",
   "configurations": [
     {
-      "name": "Listen for Xdebug",
+      "name": "Listen for XDebug",
       "type": "php",
       "request": "launch",
-      "hostname": "0.0.0.0",
       "port": 9003,
-      "pathMappings": {
-        "/var/www/html": "${workspaceFolder}"
-      },
-      "preLaunchTask": "DDEV: Enable Xdebug",
-      "postDebugTask": "DDEV: Disable Xdebug"
+      "log": false,
+      "xdebugSettings": {
+        "show_hidden": 1,
+        // Increase the depth of variable inspection in the Debug Console.
+        "max_children": 512,
+        "max_data": 1024,
+        "max_depth": 4,
+      }
     }
   ]
 }
