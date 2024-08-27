@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "200746faee1e805231f6988f29daebd2",
+    "content-hash": "9dba459980d20a9c948d1d6c3dda0f8a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1628,56 +1628,6 @@
                 "source": "https://cgit.drupalcode.org/pathauto",
                 "issues": "https://www.drupal.org/project/issues/pathauto",
                 "documentation": "https://www.drupal.org/docs/8/modules/pathauto"
-            }
-        },
-        {
-            "name": "drupal/simpleads",
-            "version": "2.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/simpleads.git",
-                "reference": "2.0.10"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/simpleads-2.0.10.zip",
-                "reference": "2.0.10",
-                "shasum": "7087cb5b0fd6b8b0888c586d1eae079868bc42bb"
-            },
-            "require": {
-                "drupal/core": "^9 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.10",
-                    "datestamp": "1686325149",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Minnur Yunusov (minnur)",
-                    "homepage": "https://www.drupal.org/u/minnur",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Advertisement module.",
-            "homepage": "http://drupal.org/project/simpleads",
-            "keywords": [
-                "Advertisement",
-                "SimpleAds"
-            ],
-            "support": {
-                "source": "https://git.drupalcode.org/project/simpleads",
-                "issues": "https://www.drupal.org/project/issues/simpleads"
             }
         },
         {

@@ -2,10 +2,14 @@
   /* DDEV container */
   /* PHP Linting */
   "php.validate.executablePath": "/usr/bin/php",
+  // "php.validate.executablePath": "/usr/local/bin/php",
   /* PHP Sniffer & Beautifier */
   "phpsab.executablePathCS": "/var/www/html/vendor/bin/phpcs",
   "phpsab.executablePathCBF": "/var/www/html/vendor/bin/phpcbf",
   "phpsab.standard": "/var/www/html/phpcs.xml",
+  // "phpsab.executablePathCS": "/app/vendor/bin/phpcs",
+  // "phpsab.executablePathCBF": "/app/vendor/bin/phpcbf",
+  // "phpsab.standard": "/app/phpcs.xml",
   "phpsab.snifferEnable": true,
   "phpsab.fixerEnable": true,
   "phpsab.snifferMode": "onType",
@@ -15,5 +19,7 @@
   "phpstan.enabled": true,
   "phpstan.showProgress": true,
   "phpstan.binPath": "/var/www/html/vendor/bin/phpstan",
-  "phpstan.configFile": "/var/www/html/phpstan.neon"
+  "phpstan.configFile": "/var/www/html/phpstan.neon",
+  // "phpstan.binPath": "/app/vendor/bin/phpstan",
+  // "phpstan.configFile": "/app/phpstan.neon"
 }
