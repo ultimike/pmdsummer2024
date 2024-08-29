@@ -13,8 +13,6 @@ dependencies:
     - node.type.repository
   module:
     - user
-_core:
-  default_config_hash: 6CYGz5YHgqou18WGPV69Bg0NPFSRoqg9NroVAOVsvXY
 id: node.repository.teaser
 targetEntityType: node
 bundle: repository

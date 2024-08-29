@@ -1,4 +1,3 @@
-uuid: 8a9cfbda-6221-4769-8780-1026c8f98b90
 langcode: en
 status: true
 dependencies:
@@ -14,8 +13,6 @@ dependencies:
     - link
     - text
     - user
-_core:
-  default_config_hash: KRvxGtR41TqpixEN72DouES2xuYMfx7e1JkG7JXsi_c
 id: node.repository.default
 targetEntityType: node
 bundle: repository

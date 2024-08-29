@@ -7,8 +7,6 @@ dependencies:
     - node.type.repository
   module:
     - link
-_core:
-  default_config_hash: vxBBTYJIVl1aQ9B_CjG0Ql5bUHYetQ3TDlj0pPaNU-4
 id: node.repository.field_url
 field_name: field_url
 entity_type: node

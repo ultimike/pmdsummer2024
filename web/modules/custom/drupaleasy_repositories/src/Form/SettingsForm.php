@@ -30,10 +30,10 @@ final class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $form['example'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Example'),
-      '#default_value' => $this->config('drupaleasy_repositories.settings')->get('example'),
+    $form['repositories_plugins'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Repository plugins'),
+      '#options' => ['yml_remote' => 'Yml remote'],
     ];
     return parent::buildForm($form, $form_state);
   }

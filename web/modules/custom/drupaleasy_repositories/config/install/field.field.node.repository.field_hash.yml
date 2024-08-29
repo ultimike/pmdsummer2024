@@ -1,12 +1,9 @@
-uuid: 2e31ccd2-06f7-4b3d-9fc7-fa6c8f18eaf4
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_hash
     - node.type.repository
-_core:
-  default_config_hash: SbmRC20BLWDoWxgDaOog-phE3cJa5yEpg3lbKrDorm0
 id: node.repository.field_hash
 field_name: field_hash
 entity_type: node

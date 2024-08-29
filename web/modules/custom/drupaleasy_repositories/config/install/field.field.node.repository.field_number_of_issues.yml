@@ -5,8 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_number_of_issues
     - node.type.repository
-_core:
-  default_config_hash: zT2LQrVf2tELXoFrsTOiug-H1OC1GnmYDSpawXx_qN0
 id: node.repository.field_number_of_issues
 field_name: field_number_of_issues
 entity_type: node

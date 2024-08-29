@@ -3,3 +3,10 @@ type: module
 description: 'Create repository nodes from remote Git repository metadata.'
 package: DrupalEasy
 core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:path
+  - drupal:link
+  - drupal:text
+  - drupal:field
+  - drupal:node
+  - drupal:menu_ui

@@ -23,12 +23,7 @@ final class AddYmlRepoTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = [
-    'drupaleasy_repositories',
-    'user',
-    'link',
-    'node',
-  ];
+  protected static $modules = ['drupaleasy_repositories'];
 
   /**
    * {@inheritdoc}
@@ -50,9 +45,17 @@ final class AddYmlRepoTest extends BrowserTestBase {
     $this->drupalLogin($admin_user);
 
     // Add the repository content type.
-    $this->createRepositoryContentType();
-
+    // $this->createRepositoryContentType();
     // Add the Repository URL field to the user entity.
+    // $this->createUserRepositoryUrlField();
+
+    // Ensure that the Repository URL field is visible in the existing user
+    // entity form mode. This is necessary when importing config/install.
+    /** @var \Drupal\Core\Entity\EntityDisplayRepository $entity_display_repository */
+    $entity_display_repository = \Drupal::service('entity_display.repository');
+    $entity_display_repository->getFormDisplay('user', 'user', 'default')
+      ->setComponent('field_repository_url', ['type' => 'link_default'])
+      ->save();
   }
 
   /**

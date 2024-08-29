@@ -8,8 +8,6 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
-_core:
-  default_config_hash: JGDp3uauKc500xnrwMHUe6X3v0DqUniisCNpORO3G30
 name: Repository
 type: repository
 description: 'Used by the DrupalEasy repositories module to hold repository metadata. '

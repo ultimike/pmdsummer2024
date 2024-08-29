@@ -1,17 +1,15 @@
-uuid: 2e31ccd2-06f7-4b3d-9fc7-fa6c8f18eaf4
+uuid: ded16edd-b2e0-4b9e-822f-a2c5e9d79b42
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_hash
+    - field.storage.node.field_machine_name
     - node.type.repository
-_core:
-  default_config_hash: SbmRC20BLWDoWxgDaOog-phE3cJa5yEpg3lbKrDorm0
-id: node.repository.field_hash
-field_name: field_hash
+id: node.repository.field_machine_name
+field_name: field_machine_name
 entity_type: node
 bundle: repository
-label: Hash
+label: 'Machine name'
 description: ''
 required: false
 translatable: false

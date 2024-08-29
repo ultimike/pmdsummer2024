@@ -1,17 +1,18 @@
-uuid: c3b03bac-7442-47e4-bc9d-59f2fef2bb91
+uuid: 96b64106-359e-4990-b2d2-44362e1f8783
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_source
     - node.type.repository
-id: node.repository.title
-field_name: title
+id: node.repository.field_source
+field_name: field_source
 entity_type: node
 bundle: repository
-label: Name
+label: Source
 description: ''
-required: true
-translatable: true
+required: false
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }

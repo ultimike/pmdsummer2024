@@ -1,4 +1,3 @@
-uuid: 86b925ee-c083-4c70-bf7f-264d1dce9582
 langcode: en
 status: true
 dependencies:
@@ -12,8 +11,6 @@ dependencies:
     - node.type.repository
   module:
     - path
-_core:
-  default_config_hash: u4pO40VppArNL6B1mArUPuizbl7gErLihv0CJKPCx3E
 id: node.repository.default
 targetEntityType: node
 bundle: repository
