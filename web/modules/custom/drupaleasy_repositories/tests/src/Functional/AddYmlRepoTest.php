@@ -6,6 +6,7 @@ namespace Drupal\Tests\drupaleasy_repositories\Functional;
 
 use Drupal\drupaleasy_repositories\Traits\RepositoryContentTypeTrait;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\user\UserInterface;
 
 /**
  * Test description.
@@ -26,6 +27,13 @@ final class AddYmlRepoTest extends BrowserTestBase {
   protected static $modules = ['drupaleasy_repositories'];
 
   /**
+   * The authenticated user.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected UserInterface $authenticatedUser;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -43,6 +51,8 @@ final class AddYmlRepoTest extends BrowserTestBase {
     // This root user can be accessed via $this->rootUser.
     $admin_user = $this->drupalCreateUser(['configure drupaleasy repositories']);
     $this->drupalLogin($admin_user);
+
+    $this->authenticatedUser = $this->drupalCreateUser(['access content']);
 
     // Add the repository content type.
     // $this->createRepositoryContentType();
@@ -105,8 +115,7 @@ final class AddYmlRepoTest extends BrowserTestBase {
    */
   public function testUnprivilegedSettingsPage(): void {
     $session = $this->assertSession();
-    $authenticated_user = $this->drupalCreateUser(['access content']);
-    $this->drupalLogin($authenticated_user);
+    $this->drupalLogin($this->authenticatedUser);
     $this->drupalGet('/admin/config/services/repositories');
     // Test to ensure that the page loads without error.
     // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
@@ -114,15 +123,57 @@ final class AddYmlRepoTest extends BrowserTestBase {
   }
 
   /**
-   * Test callback.
+   * Test that a yml repo can be added to a user profile.
+   *
+   * This tests that a yml-based repo can be added to a user's profile and that
+   * a repository node is successfully created upon saving the profile.
    *
    * @test
    */
-  public function testSomething(): void {
-    $admin_user = $this->drupalCreateUser(['administer site configuration']);
-    $this->drupalLogin($admin_user);
-    $this->drupalGet('/admin/config/system/site-information');
-    $this->assertSession()->elementExists('xpath', '//h1[text() = "Basic site settings"]');
+  public function testAddYmlRepo(): void {
+    $this->drupalLogin($this->authenticatedUser);
+
+    // Get a handle on the browsing session.
+    $session = $this->assertSession();
+
+    // Navigate to the user profile edit page.
+    $this->drupalGet('/user/' . $this->authenticatedUser->id() . '/edit');
+    $session->statusCodeEquals(200);
+
+    // Get the full path of the .yml file.
+    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
+    $module_handler = \Drupal::service('module_handler');
+    $module = $module_handler->getModule('drupaleasy_repositories');
+    $module_full_path = \Drupal::request()->getUri() . $module->getPath();
+
+    // Populate the edit array for the user profile form.
+    $edit = ['field_repository_url[0][uri]' => $module_full_path . '/tests/assets/batman-repo.yml'];
+
+    // Submit the form.
+    $this->submitForm($edit, 'Save');
+    $session->statusCodeEquals(200);
+    // Ensure the confirmation message appears.
+    $session->responseContains('The changes have been saved.');
+
+    // We can't check for the following message unless we also have the future
+    // drupaleasy_notify module enabled.
+    // $session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been created');.
+    // Find the new repository node.
+    $query = \Drupal::entityQuery('node');
+    $query->condition('type', 'repository');
+    $results = $query->accessCheck(FALSE)->execute();
+    $session->assert(count($results) === 1, 'Either 0 or more than 1 repository nodes were found.');
+
+    $entity_type_manager = \Drupal::entityTypeManager();
+    $node_storage = $entity_type_manager->getStorage('node');
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $node_storage->load(reset($results));
+
+    $session->assert($node->field_machine_name->value == 'batman-repo', 'Machine name does not match.');
+    $session->assert($node->field_description->value == 'This is where Batman keeps all his crime-fighting code.', 'Description does not match.');
+    $session->assert($node->field_number_of_issues->value == '6', 'Number of issues does not match.');
+    $session->assert($node->title->value == 'The Batman repository', 'Title name does not match.');
+    $session->assert($node->field_source->value == 'yml_remote', 'Source does not match.');
   }
 
 }
