@@ -1,0 +1,4 @@
+services:
+  plugin.manager.drupaleasy_repositories:
+    class: Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager
+    parent: default_plugin_manager
