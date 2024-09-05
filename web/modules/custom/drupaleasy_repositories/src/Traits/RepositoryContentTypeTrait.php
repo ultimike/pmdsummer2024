@@ -14,7 +14,7 @@ use Drupal\node\Entity\NodeType;
 trait RepositoryContentTypeTrait {
 
   /**
-   *
+   * Create field config for Repository URL field on user entity.
    */
   protected function createUserRepositoryUrlField(): void {
     // Add the Repository URL field to the user entity.
