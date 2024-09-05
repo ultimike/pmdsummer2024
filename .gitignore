@@ -5,3 +5,4 @@
 /web/profiles/contrib/
 /web/libraries/
 *.sql.gz
+.idea
