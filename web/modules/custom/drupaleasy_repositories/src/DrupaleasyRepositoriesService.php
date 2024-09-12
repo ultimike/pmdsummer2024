@@ -8,7 +8,7 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
- * @todo Add class description.
+ * Service class for DrupalEasy Repositories module.
  */
 final class DrupaleasyRepositoriesService {
 
@@ -32,18 +32,29 @@ final class DrupaleasyRepositoriesService {
    *   Concatenated help strings.
    */
   public function getValidatorHelpText(): string {
-    // Get module config.
-    $repositories_config = $this->configFactory->get('drupaleasy_repositories.settings')
+    $repository_plugins = [];
+
+    // Get the enabled list of our plugins from the Drupal config system.
+    // Use Null Coalesce Operator in case no repositories are enabled.
+    // See https://wiki.php.net/rfc/isset_ternary
+    $repositories_plugin_ids = $this->configFactory->get('drupaleasy_repositories.settings')
       ->get('repositories_plugins') ?? [];
-    // $enabled_plugins = ....
-    // Get our plugin manager.
-    // $this->manager = $this->container->get('plugin.manager.drupaleasy_repositories');.
-    // Loop around enabled plugin, and instantiate them.
-    // foreach ($enabled_plugins as $plugin) {
-    //   $my_plugin = $this->manager->createInstance($plugin['id']);
-    //   $help_text .= $my_plugin->validateHelpText();
-    // }
-    return $help_text;
+
+    // Loop around all plugins, and instantiate the enabled ones.
+    foreach ($repositories_plugin_ids as $repositories_plugin_id) {
+      if (!empty($repositories_plugin_id)) {
+        $repository_plugins[] = $this->pluginManagerDrupaleasyRepositories->createInstance($repositories_plugin_id);
+      }
+    }
+
+    $help = [];
+
+    /** @var \Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesInterface $repository_plugin */
+    foreach ($repository_plugins as $repository_plugin) {
+      $help[] = $repository_plugin->validateHelpText();
+    }
+
+    return implode(' ', $help);
   }
 
 }
