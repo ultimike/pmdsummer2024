@@ -35,9 +35,10 @@ final class YmlRemoteTest extends UnitTestCase {
    * @covers YmlRemote::validateHelpText
    * @test
    */
-  public function testValidateHelpText(): void {
-    self::assertEquals('https://anything.anything/anything/anything.yml (or http or yaml)', $this->ymlRemote->validateHelpText(), 'Help text does not match.');
-  }
+  // Moved to DrupalEasyRepositoriesPluginManagerText when changed to annotation.
+  // public function testValidateHelpText(): void {
+  //   self::assertEquals('https://anything.anything/anything/anything.yml (or http or yaml)', $this->ymlRemote->validateHelpText(), 'Help text does not match.');
+  // }
 
   /**
    * Data provider for testValidate().

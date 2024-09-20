@@ -13,7 +13,8 @@ use Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositories
  * @DrupaleasyRepositories(
  *   id = "yml_remote",
  *   label = @Translation("Remote .yml file"),
- *   description = @Translation("Remote .yml file that includes repository metadata.")
+ *   description = @Translation("Remote .yml file that includes repository metadata."),
+ *   url_help_text = @Translation("https://anything.anything/anything/anything.yml (or http or yaml)")
  * )
  */
 final class YmlRemote extends DrupaleasyRepositoriesPluginBase {
@@ -29,9 +30,10 @@ final class YmlRemote extends DrupaleasyRepositoriesPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function validateHelpText(): string {
-    return 'https://anything.anything/anything/anything.yml (or http or yaml)';
-  }
+  // Moved to DrupalEasyRepositoriesPluginBase when changed to annotation.
+  // public function validateHelpText(): string {
+  //   // Return 'https://anything.anything/anything/anything.yml (or http or yaml)';.
+  // }
 
   /**
    * {@inheritdoc}

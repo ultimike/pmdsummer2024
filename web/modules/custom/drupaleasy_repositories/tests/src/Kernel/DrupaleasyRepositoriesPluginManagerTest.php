@@ -49,6 +49,9 @@ final class DrupaleasyRepositoriesPluginManagerTest extends KernelTestBase {
 
     $this->assertArrayHasKey('label', $plugin_def, 'Label not present in annotation.');
     $this->assertTrue($plugin_def['label'] == 'Remote .yml file', 'Label in annotation does not match.');
+
+    $this->assertArrayHasKey('url_help_text', $plugin_def, 'URL help text not present in annotation.');
+    $this->assertTrue($plugin_def['url_help_text'] == 'https://anything.anything/anything/anything.yml (or http or yaml)', 'URL help text in annotation does not match.');
   }
 
 }

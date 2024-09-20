@@ -32,4 +32,11 @@ final class DrupaleasyRepositories extends Plugin {
    */
   public readonly string $description;
 
+  /**
+   * The help text for repository URLs.
+   *
+   * @ingroup plugin_translatable
+   */
+  public readonly string $url_help_text;
+
 }

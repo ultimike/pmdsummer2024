@@ -22,6 +22,13 @@ abstract class DrupaleasyRepositoriesPluginBase extends PluginBase implements Dr
   /**
    * {@inheritdoc}
    */
+  public function validateHelpText(): string {
+    return $this->getPluginDefinition()['url_help_text']->__toString();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function validate(string $uri): bool {
     return FALSE;
   }
