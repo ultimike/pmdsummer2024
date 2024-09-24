@@ -8,3 +8,7 @@ drupaleasy_repositories.settings:
       label: 'Repository plugins'
       sequence:
         type: string
+        constraints:
+          NotNull: {}
+  constraints:
+    FullyValidatable: ~
