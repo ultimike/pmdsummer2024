@@ -43,6 +43,8 @@ final class SettingsForm extends ConfigFormBase {
       ],
       '#default_value' => $repositories_config,
     ];
+
+    $form['#config-target'] = 'drupaleasy_repositories.settings:repositories_plugins';
     return parent::buildForm($form, $form_state);
   }
 
