@@ -4,13 +4,43 @@ declare(strict_types=1);
 
 namespace Drupal\drupaleasy_repositories\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure DrupalEasy Repositories settings for this site.
  */
 final class SettingsForm extends ConfigFormBase {
+
+  /**
+   * Constructs a \Drupal\system\ConfigFormBase object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   *   The typed config manager.
+   */
+  public function __construct(
+    protected ConfigFactoryInterface $config_factory,
+    protected DrupaleasyRepositoriesPluginManager $drupaleasy_repositories_manager,
+    protected $typedConfigManager = NULL,
+  ) {
+    parent::__construct($config_factory, $typedConfigManager);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('plugin.manager.drupaleasy_repositories'),
+      $container->get('config.typed')
+    );
+  }
 
   /**
    * {@inheritdoc}
