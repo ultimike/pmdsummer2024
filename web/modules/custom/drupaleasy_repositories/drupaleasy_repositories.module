@@ -17,6 +17,33 @@ function drupaleasy_repositories_form_user_form_alter(array &$form, FormStateInt
       $form['field_repository_url']['widget'][$el_index]['#process'][] = '_drupaleasy_repositories_url_help_text';
     }
   }
+  $form['#validate'][] = '_drupaleasy_repositories_user_form_validate';
+}
+
+/**
+ * Custom validator for Repository URL fields.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function _drupaleasy_repositories_user_form_validate(array $form, FormStateInterface $form_state): void {
+  /** @var \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $repository_service */
+  $repository_service = \Drupal::service('drupaleasy_repositories.service');
+
+  /** @var \Drupal\Core\Entity\EntityFormInterface $theFormObject */
+  $theFormObject = $form_state->getFormObject();
+  $uid = $theFormObject->getEntity()->id();
+  // If the user doesn't exist, then use the anonymous user ID (0).
+  $uid = is_null($uid) ? 0 : $uid;
+
+  $error = $repository_service->validateRepositoryUrls($form_state->getValue('field_repository_url'), $uid);
+
+  if ($error) {
+    $form_state->setErrorByName('field_repository_url', $error);
+  }
+
 }
 
 /**
@@ -35,6 +62,7 @@ function drupaleasy_repositories_form_user_form_alter(array &$form, FormStateInt
 function _drupaleasy_repositories_url_help_text(array $element, FormStateInterface $form_state, array &$form): array {
   /** @var \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $repository_service */
   $repository_service = \Drupal::service('drupaleasy_repositories.service');
+
   $help_text = $repository_service->getValidatorHelpText();
 
   if ($help_text) {

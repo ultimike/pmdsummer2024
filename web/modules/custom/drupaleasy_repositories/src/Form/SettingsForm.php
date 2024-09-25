@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\drupaleasy_repositories\Form;
 
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -20,12 +21,14 @@ final class SettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager $repositoriesManager
+   *   Our plugin manager.
    * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
    *   The typed config manager.
    */
   public function __construct(
     protected ConfigFactoryInterface $config_factory,
-    protected DrupaleasyRepositoriesPluginManager $drupaleasy_repositories_manager,
+    protected DrupaleasyRepositoriesPluginManager $repositoriesManager,
     protected $typedConfigManager = NULL,
   ) {
     parent::__construct($config_factory, $typedConfigManager);
@@ -64,13 +67,19 @@ final class SettingsForm extends ConfigFormBase {
     $repositories_config = $this->config('drupaleasy_repositories.settings')
       ->get('repositories_plugins') ?? [];
 
+    $repositories = $this->repositoriesManager->getDefinitions();
+    uasort($repositories, function ($a, $b) {
+      return Unicode::strcasecmp($a['label'], $b['label']);
+    });
+    $repository_options = [];
+    foreach ($repositories as $repository => $definition) {
+      $repository_options[$repository] = $definition['label'];
+    }
+
     $form['repositories_plugins'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Repository plugins'),
-      '#options' => [
-        'yml_remote' => $this->t('Yml remote'),
-        'github' => $this->t('GitHub'),
-      ],
+      '#options' => $repository_options,
       '#default_value' => $repositories_config,
     ];
 
