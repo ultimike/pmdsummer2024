@@ -74,7 +74,7 @@ final class DrupaleasyRepositoriesService {
    * Validate the URLs are valid based on the enabled plugins and ensure they
    * haven't been added by another user.
    *
-   * @param array $urls
+   * @param array<mixed> $urls
    *   The urls to be validated.
    * @param int $uid
    *   The user id of the user submitting the URLs.
@@ -226,9 +226,8 @@ final class DrupaleasyRepositoriesService {
       $query->condition('type', 'repository')
         ->condition('uid', $account->id())
         ->condition('field_machine_name', $key)
-        ->condition('field_source', $repo_info['source'])
-        ->accessCheck(FALSE);
-      $results = $query->execute();
+        ->condition('field_source', $repo_info['source']);
+      $results = $query->accessCheck(FALSE)->execute();
 
       if ($results) {
         /** @var \Drupal\node\Entity\Node $node */

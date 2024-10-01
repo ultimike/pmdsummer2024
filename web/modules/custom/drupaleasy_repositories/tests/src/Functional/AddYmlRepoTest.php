@@ -165,7 +165,7 @@ final class AddYmlRepoTest extends BrowserTestBase {
 
     $entity_type_manager = \Drupal::entityTypeManager();
     $node_storage = $entity_type_manager->getStorage('node');
-    /** @var \Drupal\node\NodeInterface $node */
+    /** @var \Drupal\node\Entity\Node $node */
     $node = $node_storage->load(reset($results));
 
     $session->assert($node->field_machine_name->value == 'batman-repo', 'Machine name does not match.');
