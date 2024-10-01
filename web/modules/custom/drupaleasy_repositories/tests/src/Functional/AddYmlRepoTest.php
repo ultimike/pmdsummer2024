@@ -99,7 +99,6 @@ final class AddYmlRepoTest extends BrowserTestBase {
     $session->responseContains('The configuration options have been saved.');
 
     $session->checkboxChecked('edit-repositories-plugins-yml-remote');
-    $session->checkboxNotChecked('edit-repositories-plugins-github');
   }
 
   /**

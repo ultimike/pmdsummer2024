@@ -18,13 +18,6 @@ final class DrupaleasyRepositoriesService {
   use StringTranslationTrait;
 
   /**
-   * The Entity type manager service.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected EntityTypeManagerInterface $entityTypeManager;
-
-  /**
    * The dry-run parameter.
    *
    * When set to "true", no nodes are created, updated, or deleted.
@@ -40,13 +33,13 @@ final class DrupaleasyRepositoriesService {
    *   Our plugin manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The Drupal core config factory service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity_type.manager service.
    */
   public function __construct(
     protected PluginManagerInterface $pluginManagerDrupaleasyRepositories,
     protected ConfigFactoryInterface $configFactory,
-    protected EntityTypeManagerInterface $entity_type_manager,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -156,7 +149,7 @@ final class DrupaleasyRepositoriesService {
 
     foreach ($repository_plugin_ids as $repository_plugin_id) {
       if (!empty($repository_plugin_id)) {
-        /** @var \Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesInterface $repository_location */
+        /** @var \Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesInterface $repository_plugin */
         $repository_plugin = $this->pluginManagerDrupaleasyRepositories->createInstance($repository_plugin_id);
         // Loop through repository URLs.
         foreach ($account->field_repository_url ?? [] as $url) {
@@ -170,8 +163,9 @@ final class DrupaleasyRepositoriesService {
         }
       }
     }
-    return $this->updateRepositoryNodes($repos_metadata, $account);
-
+    $repos_updated = $this->updateRepositoryNodes($repos_metadata, $account);
+    $repos_deleted = $this->deleteRepositoryNodes($repos_metadata, $account);
+    return $repos_updated || $repos_deleted;
   }
 
   /**
@@ -224,6 +218,64 @@ final class DrupaleasyRepositoriesService {
             $node->save();
             // $this->repoUpdated($node, 'updated');
           }
+        }
+      }
+      else {
+        // Repository node doesn't exist - create a new one.
+        /** @var \Drupal\node\NodeInterface $node */
+        $node = $node_storage->create([
+          'uid' => $account->id(),
+          'type' => 'repository',
+          'title' => $repo_info['label'],
+          'field_description' => $repo_info['description'],
+          'field_machine_name' => $key,
+          'field_number_of_issues' => $repo_info['num_open_issues'],
+          'field_source' => $repo_info['source'],
+          'field_url' => $repo_info['url'],
+          'field_hash' => $hash,
+        ]);
+        if (!$this->dryRun) {
+          $node->save();
+          // $this->repoUpdated($node, 'created');
+        }
+      }
+    }
+    return TRUE;
+  }
+
+  /**
+   * Delete repository nodes deleted from the source for a given user.
+   *
+   * @param array<string, array<string, string>> $repos_info
+   *   Repository info from API call.
+   * @param \Drupal\Core\Entity\EntityInterface $account
+   *   The user account whose repositories to update.
+   *
+   * @return bool
+   *   TRUE if successful.
+   */
+  protected function deleteRepositoryNodes(array $repos_info, EntityInterface $account): bool {
+    // Prepare the storage and query stuff.
+    /** @var \Drupal\Core\Entity\EntityStorageInterface $node_storage */
+    $node_storage = $this->entityTypeManager->getStorage('node');
+
+    /** @var \Drupal\Core\Entity\Query\QueryInterface $query */
+    $query = $node_storage->getQuery();
+    $query->condition('type', 'repository')
+      ->condition('uid', $account->id())
+      ->accessCheck(FALSE);
+    // We can't chain this above because $repos_info might be empty.
+    if ($repos_info) {
+      $query->condition('field_machine_name', array_keys($repos_info), 'NOT IN');
+    }
+    $results = $query->execute();
+    if ($results) {
+      $nodes = $node_storage->loadMultiple($results);
+      /** @var \Drupal\node\Entity\Node $node */
+      foreach ($nodes as $node) {
+        if (!$this->dryRun) {
+          $node->delete();
+          // $this->repoUpdated($node, 'deleted');
         }
       }
     }
