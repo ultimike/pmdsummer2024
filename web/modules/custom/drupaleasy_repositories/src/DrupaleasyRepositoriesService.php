@@ -18,15 +18,6 @@ final class DrupaleasyRepositoriesService {
   use StringTranslationTrait;
 
   /**
-   * The dry-run parameter.
-   *
-   * When set to "true", no nodes are created, updated, or deleted.
-   *
-   * @var bool
-   */
-  protected bool $dryRun = FALSE;
-
-  /**
    * The constructor.
    *
    * @param \Drupal\Component\Plugin\PluginManagerInterface $pluginManagerDrupaleasyRepositories
@@ -35,11 +26,14 @@ final class DrupaleasyRepositoriesService {
    *   The Drupal core config factory service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity_type.manager service.
+   * @param bool $dryRun
+   *   When set to "true", no nodes are created, updated, or deleted.
    */
   public function __construct(
     protected PluginManagerInterface $pluginManagerDrupaleasyRepositories,
     protected ConfigFactoryInterface $configFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected bool $dryRun = FALSE,
   ) {}
 
   /**
@@ -118,6 +112,15 @@ final class DrupaleasyRepositoriesService {
           foreach ($repository_plugins as $repository_plugin) {
             if ($repository_plugin->validate($uri)) {
               $is_valid_url = TRUE;
+              $repo_metadata = $repository_plugin->getRepo($uri);
+              if ($repo_metadata) {
+                if (!$this->isUnique($repo_metadata, $uid)) {
+                  $errors[] = $this->t('Another user has already added the repository from %uri to this site.', ['%uri' => $uri]);
+                }
+              }
+              else {
+                $errors[] = $this->t('The repository at the url %uri was not found.', ['%uri' => $uri]);
+              }
             }
           }
           if (!$is_valid_url) {
@@ -132,6 +135,32 @@ final class DrupaleasyRepositoriesService {
     }
     // No errors found.
     return '';
+  }
+
+  /**
+   * Check to see if the repository is unique.
+   *
+   * @param array<string, array<string, string|int>> $repo_info
+   *   The repository array.
+   * @param int $uid
+   *   The uid of the user trying to add the repository to their profile.
+   *
+   * @return bool
+   *   TRUE if unique.
+   */
+  protected function isUnique(array $repo_info, int $uid): bool {
+    /** @var \Drupal\node\NodeStorageInterface $node_storage */
+    $node_storage = $this->entityTypeManager->getStorage('node');
+
+    $machine_name = array_key_first($repo_info);
+
+    $query = $node_storage->getQuery();
+    $query->condition('type', 'repository')
+      ->condition('uid', $uid, '<>')
+      ->condition('field_machine_name', $machine_name);
+    $results = $query->accessCheck(FALSE)->execute();
+
+    return !count($results);
   }
 
   /**

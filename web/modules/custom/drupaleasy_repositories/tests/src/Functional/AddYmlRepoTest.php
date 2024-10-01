@@ -175,4 +175,54 @@ final class AddYmlRepoTest extends BrowserTestBase {
     $session->assert($node->field_source->value == 'yml_remote', 'Source does not match.');
   }
 
+  /**
+   * Test that a yml repo can be removed from a user profile.
+   *
+   * This tests that a yml-based repo can be removed from a user's profile and
+   * that the corresponding repository node is deleted.
+   *
+   * @test
+   */
+  public function testRemoveYmlRepo(): void {
+    $this->drupalLogin($this->authenticatedUser);
+
+    // Get a handle on the browsing session.
+    $session = $this->assertSession();
+
+    // Navigate to the user profile edit page.
+    $this->drupalGet('/user/' . $this->authenticatedUser->id() . '/edit');
+    $session->statusCodeEquals(200);
+
+    // Get the full path of the .yml file.
+    /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
+    $module_handler = \Drupal::service('module_handler');
+    $module = $module_handler->getModule('drupaleasy_repositories');
+    $module_full_path = \Drupal::request()->getUri() . $module->getPath();
+
+    // Populate the edit array for the user profile form.
+    $edit = ['field_repository_url[0][uri]' => $module_full_path . '/tests/assets/batman-repo.yml'];
+
+    // Submit the form.
+    $this->submitForm($edit, 'Save');
+    $session->statusCodeEquals(200);
+    // Ensure the confirmation message appears.
+    $session->responseContains('The changes have been saved.');
+
+    // Unpopulate the edit array for the user profile form.
+    $edit = ['field_repository_url[0][uri]' => ''];
+
+    // Submit the form.
+    $this->submitForm($edit, 'Save');
+    $session->statusCodeEquals(200);
+
+    // We can't check for the following message unless we also have the future
+    // drupaleasy_notify module enabled.
+    // $session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been deleted');.
+    // Find the new repository node.
+    $query = \Drupal::entityQuery('node');
+    $query->condition('type', 'repository');
+    $results = $query->accessCheck(FALSE)->execute();
+    $session->assert(count($results) === 0, 'The repository node does not appear to have been deleted.');
+  }
+
 }
