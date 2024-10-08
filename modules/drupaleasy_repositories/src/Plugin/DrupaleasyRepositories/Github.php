@@ -78,7 +78,7 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
     // The authenticate() method does not actually call the GitHub API,
     // rather it only stores the authentication info in $this->client for use
     // when $this->client makes an API call that requires authentication.
-    $this->client->authenticate('ultimike', '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', AuthMethod::CLIENT_ID);
+    $this->client->authenticate('ultimike', '', AuthMethod::CLIENT_ID);
   }
 
 }
