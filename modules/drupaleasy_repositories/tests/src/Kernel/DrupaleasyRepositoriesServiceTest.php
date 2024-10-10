@@ -55,6 +55,7 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
     'text',
     // For link field types.
     'link',
+    'key',
   ];
 
   /**
@@ -99,7 +100,7 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
   /**
    * Data provider for testIsUnique().
    *
-   * @return array
+   * @return array<int, array<int, bool|array<mixed>>>
    *   Test data and expected results.
    */
   public function providerTestIsUnique(): array {
@@ -111,6 +112,11 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
 
   /**
    * Test the ability for the service to ensure repositories are unique.
+   *
+   * @param bool $expected
+   *   The expected value.
+   * @param array<mixed> $repo
+   *   The repository to be tested.
    *
    * @covers \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService::isUnique
    * @dataProvider providerTestIsUnique
@@ -134,7 +140,7 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
   /**
    * Data provider for testValidateRepositoryUrls().
    *
-   * @return array
+   * @return array<mixed>
    *   Test data and expected results.
    */
   public function providerValidateRepositoryUrls(): array {
@@ -148,6 +154,11 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
 
   /**
    * Test the ability for the service to ensure repositories are valid.
+   *
+   * @param string $expected
+   *   The expected value.
+   * @param array<mixed> $urls
+   *   The repository to be tested.
    *
    * @covers \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService::validateRepositoryUrls
    * @dataProvider providerValidateRepositoryUrls

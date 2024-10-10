@@ -6,3 +6,4 @@
 /web/libraries/
 *.sql.gz
 .idea
+/keys

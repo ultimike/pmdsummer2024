@@ -10,3 +10,4 @@ dependencies:
   - drupal:field
   - drupal:node
   - drupal:menu_ui
+  - key:key
