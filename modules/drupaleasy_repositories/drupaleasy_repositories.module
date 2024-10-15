@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_form_FORM_ID_alter() for user profile form.
@@ -92,5 +93,47 @@ function _drupaleasy_repositories_user_form_submit(array $form, FormStateInterfa
   $account = User::load($form_state->getValue('uid'));
   if (!is_null($account)) {
     $repository_service->updateRepositories($account);
+  }
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function drupaleasy_repositories_user_login(UserInterface $account): void {
+  /** @var Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $der */
+  $der = \Drupal::service('drupaleasy_repositories.service');
+
+  /** @var \Drupal\Core\Messenger\MessengerInterface $messenger */
+  $messenger = \Drupal::service('messenger');
+
+  if ($der->updateRepositories($account)) {
+    $messenger->addStatus(t('Your repository nodes have been updated.'));
+  }
+  else {
+    $messenger->addError(t('Something went wrong! Repository nodes were not updated.'));
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function drupaleasy_repositories_cron(): void {
+  // Creating tasks to update repository nodes once per day, between 1-2am GMT.
+  // Assume that cron runs once/hour.
+  $hour = (int) (time() / 3600) % 24;
+  //if ($hour === 1) {
+  if (1 === 1) {
+    // Get a list of all active users on the site.
+    $query = \Drupal::entityQuery('user');
+    $query->condition('status', 1);
+    $query->condition('field_repository_url', NULL, 'IS NOT NULL');
+    $users = $query->accessCheck(FALSE)->execute();
+
+    // Create queue items for each user. Cron will process queue items during
+    // future cron runs.
+    $queue = \Drupal::queue('drupaleasy_repositories_repository_node_updater');
+    foreach ($users as $uid => $user) {
+      $queue->createItem(['uid' => $uid]);
+    }
   }
 }

@@ -31,7 +31,7 @@ abstract class DrupaleasyRepositoriesPluginBase extends PluginBase implements Dr
   }
 
   /**
-   * Constructs a \Drupal\Component\Plugin\PluginBase object.
+   * Constructs a DrupaleasyRepositoriesPluginBase object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
