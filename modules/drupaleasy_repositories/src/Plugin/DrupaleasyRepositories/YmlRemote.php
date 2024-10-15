@@ -30,7 +30,7 @@ final class YmlRemote extends DrupaleasyRepositoriesPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function getRepo(string $uri): array {
+  public function getRepo(string $uri, Object $client = NULL): array {
     // Temporarily set the PHP error handler to this custom one. If there are
     // any E_WARNINGs, then TRUE to disable default PHP error handler.
     // This is basically telling PHP that we are going handle errors of type

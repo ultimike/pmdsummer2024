@@ -25,7 +25,7 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
    *
    * @var \Github\Client
    */
-  protected Client $client;
+  // Protected Client $client;.
 
   /**
    * {@inheritdoc}
@@ -38,19 +38,23 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function getRepo(string $uri): array {
+  public function getRepo(string $uri, Object $client = NULL): array {
     // Get the repository vendor and name from the $uri parameter.
     $all_parts = parse_url($uri);
     $path_parts = explode('/', $all_parts['path']);
 
+    if ((!$client) || (!$client->isInstanceOf('Github\Client'))) {
+      $client = new Client();
+    }
+
     // Set up API authentication.
-    $this->setAuthentication();
+    $client = $this->setAuthentication($client);
 
     // Make the API call to get the repository metadata.
     try {
       // Try this code.
       /** @var \Github\Api\Repo $repo */
-      $repo = $this->client->api('repo');
+      $repo = $client->api('repo');
       $repo_metadata = $repo->show($path_parts[1], $path_parts[2]);
     }
     catch (\Throwable $th) {
@@ -73,16 +77,17 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
   /**
    * Authenticate with GitHub.
    */
-  protected function setAuthentication(): void {
-    $this->client = new Client();
-
+  protected function setAuthentication(Client $client): Client {
+    // $this->client = new Client();
     // Get access to the credentials from the Key module.
     $github_key = $this->keyRepository->getKey('github')->getKeyValues();
 
     // The authenticate() method does not actually call the GitHub API,
     // rather it only stores the authentication info in $this->client for use
     // when $this->client makes an API call that requires authentication.
-    $this->client->authenticate($github_key['username'], $github_key['personal_access_token'], AuthMethod::CLIENT_ID);
+    $client->authenticate($github_key['username'], $github_key['personal_access_token'], AuthMethod::CLIENT_ID);
+
+    return $client;
   }
 
 }

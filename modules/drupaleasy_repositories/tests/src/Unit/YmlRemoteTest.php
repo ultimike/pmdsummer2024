@@ -56,13 +56,13 @@ final class YmlRemoteTest extends UnitTestCase {
 
     // Sample code that could be used in a Github plugin unit test for faking
     // getting credentials from the Key module.
-    $this->key = $this->createMock(KeyInterface::class);
-    $this->keyRepository->expects($this->any())
-      ->method('getKey')
-      ->will($this->returnValue($this->key));
-    $this->key->expects($this->any())
-      ->method('getKeyValues')
-      ->will($this->returnValue(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']));
+    // $this->key = $this->createMock(KeyInterface::class);
+    // $this->keyRepository->expects($this->any())
+    //   ->method('getKey')
+    //   ->will($this->returnValue($this->key));
+    // $this->key->expects($this->any())
+    //   ->method('getKeyValues')
+    //   ->will($this->returnValue(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']));
     $this->ymlRemote = new YmlRemote([], 'yml_remote', [], $this->messenger, $this->keyRepository);
   }
 
