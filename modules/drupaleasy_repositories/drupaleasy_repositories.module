@@ -82,7 +82,7 @@ function _drupaleasy_repositories_url_help_text(array $element, FormStateInterfa
 /**
  * Custom submit handler for user profile form.
  *
- * @param array $form
+ * @param array<mixed> $form
  *   The form.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The form state.
@@ -121,13 +121,11 @@ function drupaleasy_repositories_cron(): void {
   // Creating tasks to update repository nodes once per day, between 1-2am GMT.
   // Assume that cron runs once/hour.
   $hour = (int) (time() / 3600) % 24;
-  //if ($hour === 1) {
-  if (1 === 1) {
+  if ($hour === 1) {
     // Get a list of all active users on the site.
-    $query = \Drupal::entityQuery('user');
-    $query->condition('status', 1);
-    $query->condition('field_repository_url', NULL, 'IS NOT NULL');
-    $users = $query->accessCheck(FALSE)->execute();
+    /** @var Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $der */
+    $der = \Drupal::service('drupaleasy_repositories.service');
+    $users = $der->getUserUpdateList();
 
     // Create queue items for each user. Cron will process queue items during
     // future cron runs.

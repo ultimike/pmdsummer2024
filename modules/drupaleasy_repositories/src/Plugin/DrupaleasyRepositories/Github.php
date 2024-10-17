@@ -21,13 +21,6 @@ use Github\Client;
 final class Github extends DrupaleasyRepositoriesPluginBase {
 
   /**
-   * The GitHub client object used for making API calls.
-   *
-   * @var \Github\Client
-   */
-  // Protected Client $client;.
-
-  /**
    * {@inheritdoc}
    */
   public function validate(string $uri): bool {
@@ -78,7 +71,6 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
    * Authenticate with GitHub.
    */
   protected function setAuthentication(Client $client): Client {
-    // $this->client = new Client();
     // Get access to the credentials from the Key module.
     $github_key = $this->keyRepository->getKey('github')->getKeyValues();
 

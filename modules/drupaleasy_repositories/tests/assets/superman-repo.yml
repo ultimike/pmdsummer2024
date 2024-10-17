@@ -1,0 +1,4 @@
+superman-repo:
+  label: The Superman repository
+  description: This is normally secured in the Fortress of Solitude.
+  num_open_issues: 14

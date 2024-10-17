@@ -310,4 +310,18 @@ final class DrupaleasyRepositoriesService {
     return TRUE;
   }
 
+  /**
+   * Returns a list of users whose repositories should be updated.
+   *
+   * @return array<int, string>
+   *   User IDs.
+   */
+  public function getUserUpdateList(): array {
+    $user_storage = $this->entityTypeManager->getStorage('user');
+    $query = $user_storage->getQuery();
+    $query->condition('status', 1);
+    $query->condition('field_repository_url', NULL, 'IS NOT NULL');
+    return $query->accessCheck(FALSE)->execute();
+  }
+
 }

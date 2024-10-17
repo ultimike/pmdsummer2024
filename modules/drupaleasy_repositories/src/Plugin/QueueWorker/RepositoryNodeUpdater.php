@@ -24,7 +24,7 @@ final class RepositoryNodeUpdater extends QueueWorkerBase implements ContainerFa
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, string $plugin_id, mixed $plugin_definition): RepositoryNodeUpdater {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): RepositoryNodeUpdater {
     return new static(
       $configuration,
       $plugin_id,
@@ -37,7 +37,7 @@ final class RepositoryNodeUpdater extends QueueWorkerBase implements ContainerFa
   /**
    * Constructs a RepositoryNodeUpdater object.
    *
-   * @param array $configuration
+   * @param array<mixed> $configuration
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin_id for the plugin instance.
