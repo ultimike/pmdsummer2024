@@ -143,7 +143,7 @@ final class YmlRemoteTest extends UnitTestCase {
   public function testValidate(string $test_string, bool $expected): void {
     self::assertEquals($expected, $this->ymlRemote->validate($test_string), "Validation of '{$test_string}' does not return '{$expected}'.");
     // This is just an example, it is not testing anything at all.
-    $this->keyRepository->getKey('blah')->getKeyValues();
+    //$this->keyRepository->getKey('blah')->getKeyValues();
   }
 
   /**

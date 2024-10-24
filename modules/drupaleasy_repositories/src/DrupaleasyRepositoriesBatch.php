@@ -6,11 +6,13 @@ namespace Drupal\drupaleasy_repositories;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * DrupalEasy repositories batch service class to integrate with Batch API.
  */
 final class DrupaleasyRepositoriesBatch {
+  use StringTranslationTrait;
 
   /**
    * Constructs a DrupaleasyRepositoriesBatch object.
@@ -43,6 +45,23 @@ final class DrupaleasyRepositoriesBatch {
 
     // Submit the batch for processing.
     batch_set($batch);
+  }
+
+  /**
+   * Method for updating user repositories in a Batch.
+   *
+   * @param int $uid
+   *   The user ID whose repositories will be updated.
+   * @param array<mixed>|\ArrayAccess<string, array<mixed>> $context
+   *   The Batch API context.
+   */
+  public function updateRepositoriesBatch(int $uid, array|\ArrayAccess &$context): void {
+    $user_storage = $this->entityTypeManager->getStorage('user');
+    $account = $user_storage->load($uid);
+    if ($this->drupaleasyRepositoriesService->updateRepositories($account)) {
+      $context['results']['uids'][] = $uid;
+      $context['message'] = $this->t('Updated repositories belonging to "@username".', ['@username' => $account->label()]);
+    }
   }
 
 }
