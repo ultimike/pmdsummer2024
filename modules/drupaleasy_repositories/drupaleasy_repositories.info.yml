@@ -11,3 +11,4 @@ dependencies:
   - drupal:node
   - drupal:menu_ui
   - key:key
+  - queue_ui:queue_ui

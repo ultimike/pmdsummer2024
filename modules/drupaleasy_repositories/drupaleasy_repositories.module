@@ -125,13 +125,14 @@ function drupaleasy_repositories_cron(): void {
     // Get a list of all active users on the site.
     /** @var Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $der */
     $der = \Drupal::service('drupaleasy_repositories.service');
-    $users = $der->getUserUpdateList();
+    // $users = $der->getUserUpdateList();
 
-    // Create queue items for each user. Cron will process queue items during
-    // future cron runs.
-    $queue = \Drupal::queue('drupaleasy_repositories_repository_node_updater');
-    foreach ($users as $uid => $user) {
-      $queue->createItem(['uid' => $uid]);
-    }
+    // // Create queue items for each user. Cron will process queue items during
+    // // future cron runs.
+    // $queue = \Drupal::queue('drupaleasy_repositories_repository_node_updater');
+    // foreach ($users as $uid => $user) {
+    //   $queue->createItem(['uid' => $uid]);
+    // }
+    $der->createQueueItems();
   }
 }

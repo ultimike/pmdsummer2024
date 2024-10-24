@@ -8,6 +8,7 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
@@ -25,7 +26,9 @@ final class DrupaleasyRepositoriesService {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The Drupal core config factory service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   *   The entity_type.manager service.
+   *   The Drupal core entity_type.manager service.
+   * @param \Drupal\Core\Queue\QueueFactory $queue
+   *   The Drupal core queue factory service.
    * @param bool $dryRun
    *   When set to "true", no nodes are created, updated, or deleted.
    */
@@ -33,6 +36,7 @@ final class DrupaleasyRepositoriesService {
     protected PluginManagerInterface $pluginManagerDrupaleasyRepositories,
     protected ConfigFactoryInterface $configFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected QueueFactory $queue,
     protected bool $dryRun = FALSE,
   ) {}
 
@@ -322,6 +326,21 @@ final class DrupaleasyRepositoriesService {
     $query->condition('status', 1);
     $query->condition('field_repository_url', NULL, 'IS NOT NULL');
     return $query->accessCheck(FALSE)->execute();
+  }
+
+  /**
+   * Create queue items for active users with repository URL data.
+   */
+  public function createQueueItems(): void {
+    // Get a list of all active users on the site.
+    $users = $this->getUserUpdateList();
+
+    // Create queue items for each user. Cron will process queue items during
+    // future cron runs.
+    $queue = $this->queue->get('drupaleasy_repositories_repository_node_updater');
+    foreach ($users as $uid => $user) {
+      $queue->createItem(['uid' => $uid]);
+    }
   }
 
 }

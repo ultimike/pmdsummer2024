@@ -1,6 +1,12 @@
 drupaleasy_repositories.settings:
-  title: DrupalEasy repositories settings
+  title: DrupalEasy repositories - settings
   description: DrupalEasy repositories settings
   parent: system.admin_config_services
   route_name: drupaleasy_repositories.settings
+  weight: 10
+drupaleasy_repositories.repositories_update:
+  title: Update repository nodes
+  description: DrupalEasy repositories update
+  parent: drupaleasy_repositories.settings
+  route_name: drupaleasy_repositories.update_repositories
   weight: 10

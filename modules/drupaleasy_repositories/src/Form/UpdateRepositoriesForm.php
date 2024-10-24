@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesBatch;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService;
+use Drupal\queue_ui\QueueUIBatchInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,11 +26,14 @@ final class UpdateRepositoriesForm extends FormBase {
    *   The DrupalEasy repositories custom service class for batch processing.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The Drupal core entity type manager service class.
+   * @param \Drupal\queue_ui\QueueUIBatchInterface $queueUiBatch
+   *   The Drupal Queue UI module batch service.
    */
   public function __construct(
     protected DrupaleasyRepositoriesService $repositoriesService,
     protected DrupaleasyRepositoriesBatch $repositoriesBatch,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected QueueUIBatchInterface $queueUiBatch,
   ) {
   }
 
@@ -40,7 +44,8 @@ final class UpdateRepositoriesForm extends FormBase {
     return new static(
       $container->get('drupaleasy_repositories.service'),
       $container->get('drupaleasy_repositories.batch'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('queue_ui.batch')
     );
   }
 
@@ -92,7 +97,15 @@ final class UpdateRepositoriesForm extends FormBase {
     }
     else {
       // Update all user repositories - use magic Batch stuff.
-      $this->repositoriesBatch->updateAllRepositories();
+      //$this->repositoriesBatch->updateAllRepositories();
+      // Update all user repositories - use queue and Queue UI module.
+      // No custom Batch API stuff!
+      $this->repositoriesService->createQueueItems();
+      // $this->messenger()->addMessage($this->t('Queue items have been created, please go to <a href=":url">Queue Manager</a> to process them.', [
+      //   ':url' => '/admin/config/system/queue-ui',
+      // ]));
+      // Call Queue UI batch manager directly to run all queue items as a batch.
+      $this->queueUiBatch->batch(['drupaleasy_repositories_repository_node_updater']);
     }
   }
 
