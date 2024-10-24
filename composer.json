@@ -28,6 +28,7 @@
         "drupal/pathauto": "^1.13",
         "drupal/queue_ui": "^3.2",
         "drupaleasy/drupaleasy_repositories": "^1.0",
+        "drupaleasy/no_more_hooks": "^1.0",
         "drush/drush": "^13.0"
     },
     "conflict": {

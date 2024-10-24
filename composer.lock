@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "926b731022024852c402454e72d84dc1",
+    "content-hash": "b72b9f247f61f2622bf7aff28350d3c8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2356,13 +2356,30 @@
             "dist": {
                 "type": "path",
                 "url": "./modules/drupaleasy_repositories",
-                "reference": "ba25ed66f590dea44d1c89da52c4e801c85695fd"
+                "reference": "312009aa3cd2b107dc2ed91777c581707f4a27b8"
             },
             "require": {
                 "drupal/key": "^1.19",
+                "drupal/queue_ui": "^3",
                 "guzzlehttp/guzzle": "^7.0.1",
                 "http-interop/http-factory-guzzle": "^1.0",
                 "knplabs/github-api": "^3.0",
+                "php": ">=8.1.0"
+            },
+            "type": "drupal-custom-module",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "drupaleasy/no_more_hooks",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./modules/no_more_hooks",
+                "reference": "ed045d41ed1de30206cbff5c7545db381bcf6387"
+            },
+            "require": {
                 "php": ">=8.1.0"
             },
             "type": "drupal-custom-module",
