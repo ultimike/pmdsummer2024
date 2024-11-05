@@ -1,0 +1,9 @@
+{
+  "name": "drupaleasy/drupaleasy_notify",
+  "type": "drupal-custom-module",
+  "version": "1.0.0",
+  "require": {
+    "php": ">=8.1.0",
+    "drupaleasy/drupaleasy_repositories": "^1.0"
+  }
+}

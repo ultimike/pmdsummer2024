@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b72b9f247f61f2622bf7aff28350d3c8",
+    "content-hash": "af016b3a32b0918cd06c6cf6580038b3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2348,6 +2348,23 @@
             "homepage": "https://www.drupal.org/project/token",
             "support": {
                 "source": "https://git.drupalcode.org/project/token"
+            }
+        },
+        {
+            "name": "drupaleasy/drupaleasy_notify",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./modules/drupaleasy_notify",
+                "reference": "c91f989f1a99d4c39aacf3fc83b7639164752425"
+            },
+            "require": {
+                "drupaleasy/drupaleasy_repositories": "^1.0",
+                "php": ">=8.1.0"
+            },
+            "type": "drupal-custom-module",
+            "transport-options": {
+                "relative": true
             }
         },
         {

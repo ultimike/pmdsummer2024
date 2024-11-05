@@ -24,7 +24,9 @@ final class AddYmlRepoTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['drupaleasy_repositories'];
+  protected static $modules = [
+    'drupaleasy_repositories',
+  ];
 
   /**
    * The authenticated user.
@@ -156,7 +158,7 @@ final class AddYmlRepoTest extends BrowserTestBase {
 
     // We can't check for the following message unless we also have the future
     // drupaleasy_notify module enabled.
-    // $session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been created');.
+    //$session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been created');
     // Find the new repository node.
     $query = \Drupal::entityQuery('node');
     $query->condition('type', 'repository');

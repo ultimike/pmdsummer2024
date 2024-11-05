@@ -26,8 +26,11 @@ final class DrupaleasyRepositoriesBatch {
 
   /**
    * Updates all user repositories using the Batch API.
+   *
+   * @param bool $drush
+   *   TRUE if calling this method from Drush.
    */
-  public function updateAllRepositories(): void {
+  public function updateAllRepositories(bool $drush = FALSE): void {
     // $operations = [];
     // Get all active users with repository URL data.
     $users = $this->drupaleasyRepositoriesService->getUserUpdateList();
@@ -51,7 +54,11 @@ final class DrupaleasyRepositoriesBatch {
     foreach ($users as $uid => $user) {
       $batch_builder->addOperation('drupaleasy_update_repositories_batch_operation', [$uid]);
     }
+
     batch_set($batch_builder->toArray());
+    if ($drush) {
+      drush_backend_batch_process();
+    }
 
     // Submit the batch for processing.
     // batch_set($batch);
