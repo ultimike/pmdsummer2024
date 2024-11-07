@@ -25,6 +25,8 @@
         "drupal/core-project-message": "^10.3",
         "drupal/core-recommended": "^10.3",
         "drupal/devel": "^5.3",
+        "drupal/field_group": "^3.6",
+        "drupal/jquery_ui_accordion": "^2.1",
         "drupal/pathauto": "^1.13",
         "drupal/queue_ui": "^3.2",
         "drupaleasy/drupaleasy_notify": "^1.0",

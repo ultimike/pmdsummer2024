@@ -76,6 +76,11 @@
     <testsuite name="build">
       <file>./web/core/tests/TestSuites/BuildTestSuite.php</file>
     </testsuite>
+    <testsuite name="default">
+      <directory>modules</directory>
+      <!-- <directory>web/modules/contrib</directory>
+      <directory>web/core</directory> -->
+    </testsuite>
   </testsuites>
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">

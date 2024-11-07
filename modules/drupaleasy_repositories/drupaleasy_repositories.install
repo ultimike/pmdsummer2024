@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for DrupalEasy Repositories.
+ */
+
+declare(strict_types=1);
+
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Implements hook_install().
+ */
+function drupaleasy_repositories_install(bool $is_syncing): void {
+  if (!$is_syncing) {
+    /** @var \Drupal\Core\Entity\EntityDisplayRepository $entity_display_repository */
+    $entity_display_repository = \Drupal::service('entity_display.repository');
+    $entity_display_repository->getFormDisplay('user', 'user', 'default')
+      ->setComponent('field_repository_url', ['type' => 'link_default'])
+      ->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function drupaleasy_repositories_uninstall(): void {
+  FieldStorageConfig::loadByName('user', 'field_repository_url')->delete();
+  \Drupal::messenger()->addStatus(t('The Repository URL field on the user entity type has been removed.'));
+}

@@ -7,6 +7,7 @@ namespace Drupal\drupaleasy_repositories\Drush\Commands;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesBatch;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService;
+use Drupal\queue_ui\QueueUIBatchInterface;
 use Drush\Attributes as CLI;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
@@ -28,15 +29,19 @@ final class DrupaleasyRepositoriesCommands extends DrushCommands {
    *   The Drupal core entity type manager service.
    * @param \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesBatch $batch
    *   The custom DrupalEasy batch service.
+   * @param \Drupal\queue_ui\QueueUIBatchInterface $queueUiBatch
+   *   The Drupal Queue UI module batch service.
    */
   public function __construct(
     // Via https://www.drupal.org/node/3396179
     #[Autowire(service: 'drupaleasy_repositories.service')]
-    protected DrupaleasyRepositoriesService $repositoriesService,
+    private readonly DrupaleasyRepositoriesService $repositoriesService,
     #[Autowire(service: 'entity_type.manager')]
-    protected EntityTypeManagerInterface $entityTypeManager,
+    private readonly EntityTypeManagerInterface $entityTypeManager,
     #[Autowire(service: 'drupaleasy_repositories.batch')]
-    protected DrupaleasyRepositoriesBatch $batch,
+    private readonly DrupaleasyRepositoriesBatch $batch,
+    #[Autowire(service: 'queue_ui.batch')]
+    private readonly QueueUIBatchInterface $queueUiBatch,
   ) {
     parent::__construct();
   }
@@ -79,7 +84,12 @@ final class DrupaleasyRepositoriesCommands extends DrushCommands {
         return;
       }
       // Update all user repositories. ("TRUE" for using Drush.)
-      $this->batch->updateAllRepositories(TRUE);
+      // $this->batch->updateAllRepositories(TRUE);
+      // Create Queue items.
+      $this->repositoriesService->createQueueItems();
+      // Call Queue UI batch manager directly to run all queue items as a batch.
+      $this->queueUiBatch->batch(['drupaleasy_repositories_repository_node_updater']);
+      drush_backend_batch_process();
     }
   }
 
