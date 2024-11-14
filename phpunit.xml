@@ -76,12 +76,26 @@
     <testsuite name="build">
       <file>./web/core/tests/TestSuites/BuildTestSuite.php</file>
     </testsuite>
-    <testsuite name="default">
-      <directory>modules</directory>
-      <!-- <directory>web/modules/contrib</directory>
-      <directory>web/core</directory> -->
+    <testsuite name="drupaleasy_repositories">
+      <directory>modules/drupaleasy_repositories/tests</directory>
     </testsuite>
+    <testsuite name="contrib-key-group">
+      <directory>web/modules/contrib</directory>
+      <group>key</group>
+    </testsuite>
+    <!-- <testsuite name="default"> -->
+      <!-- <directory>*</directory> -->
+      <!-- <directory>modules</directory> -->
+      <!-- <directory>web/modules/custom</directory> -->
+      <!-- <directory>web/modules/contrib</directory> -->
+      <!-- <directory>web/core</directory> -->
+    <!-- </testsuite> -->
   </testsuites>
+  <groups>
+    <include>
+      <group>drupaleasy_repositories</group>
+    </include>
+  </groups>
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">
     </listener>
