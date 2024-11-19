@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: markdown_block
+label: 'Markdown block'
+revision: false
+description: 'Use this to create a block using Markdown syntax.'

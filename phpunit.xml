@@ -25,7 +25,7 @@
     <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/database_name#table_prefix -->
     <env name="SIMPLETEST_DB" value="sqlite://localhost//dev/shm/test.sqlite"/>
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
-    <!-- <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/var/www/html/web/sites/simpletest/browser_output"/> -->
+<!--     <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/var/www/html/web/sites/simpletest/browser_output"/> -->
     <!-- By default, browser tests will output links that use the base URL set
      in SIMPLETEST_BASE_URL. However, if your SIMPLETEST_BASE_URL is an internal
      path (such as may be the case in a virtual or Docker-based environment),
@@ -78,10 +78,6 @@
     </testsuite>
     <testsuite name="drupaleasy_repositories">
       <directory>modules/drupaleasy_repositories/tests</directory>
-    </testsuite>
-    <testsuite name="contrib-key-group">
-      <directory>web/modules/contrib</directory>
-      <group>key</group>
     </testsuite>
     <!-- <testsuite name="default"> -->
       <!-- <directory>*</directory> -->

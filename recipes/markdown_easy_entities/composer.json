@@ -1,0 +1,16 @@
+{
+    "name": "drupal/markdown_easy_entities",
+    "description": "Installs, configures, and creates content and block type for Markdown Easy module for Drupal.",
+    "keywords": ["recipe", "Drupal recipes", "drupal recipe"],
+    "type": "drupal-recipe",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Michael Anello",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "drupal/markdown_easy": "*"
+    }
+}

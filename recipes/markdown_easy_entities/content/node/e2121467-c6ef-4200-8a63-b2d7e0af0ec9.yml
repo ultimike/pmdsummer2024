@@ -1,0 +1,40 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: e2121467-c6ef-4200-8a63-b2d7e0af0ec9
+  bundle: markdown_page
+  default_langcode: en
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Markdown demonstration page'
+  created:
+    -
+      value: 1731871958
+  promote:
+    -
+      value: true
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      alias: ''
+      langcode: en
+  body:
+    -
+      value: "## This is a Markdown demonstration page.\r\n\r\nThis page was created by the [Markdown Easy Entities recipe](https://www.drupal.org/project/markdown_easy_entities). "
+      format: markdown
+      summary: ''

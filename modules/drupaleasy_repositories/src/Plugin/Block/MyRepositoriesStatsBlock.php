@@ -13,7 +13,7 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a my repositories stats block.
+ * Provides a "my repositories" stats block.
  *
  * @Block(
  *   id = "drupaleasy_repositories_my_repositories_stats",
@@ -77,9 +77,11 @@ final class MyRepositoriesStatsBlock extends BlockBase implements ContainerFacto
         $this->t('Total number of issues in all repository nodes: @all', ['@all' => $this->calculateTotalIssues()]),
         $this->t('Total number of issues in my repository nodes: @my', ['@my' => $this->calculateTotalIssues((int) $this->currentUser->id())]),
       ],
-      // '#cache' => [
-      //   'max-age' => 0,
-      // ],
+      '#cache' => [
+        'contexts' => ['timezone', 'user'],
+        'tags' => ['node_list:repository', 'drupaleasy_repositories'],
+        'max-age' => 0,
+      ],
     ];
 
     return $build;
@@ -88,8 +90,22 @@ final class MyRepositoriesStatsBlock extends BlockBase implements ContainerFacto
   /**
    * {@inheritDoc}
    */
-  public function getCacheMaxAge() {
+  public function getCacheMaxAge(): int {
     return 0;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getCacheTags(): array {
+    return ['node_list:repository', 'drupaleasy_repositories'];
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getCacheContexts(): array {
+    return ['timezone', 'user'];
   }
 
   /**
@@ -102,6 +118,7 @@ final class MyRepositoriesStatsBlock extends BlockBase implements ContainerFacto
    *   The total number of issues.
    */
   protected function calculateTotalIssues(?int $uid = NULL): int {
+    usleep(3000000);
     $return = 0;
     $node_storage = $this->entityTypeManager->getStorage('node');
     $query = $node_storage->getQuery();

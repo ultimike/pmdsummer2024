@@ -1,0 +1,20 @@
+name: 'Markdown Easy Entities'
+description: 'Installs, configures, and creates content and block type for Markdown Easy module for Drupal.'
+type: 'Text format'
+install:
+  - markdown_easy
+config:
+  import:
+    markdown_easy: "*"
+  actions:
+    user.role.content_editor:
+      grantPermissions:
+        - 'use text format markdown'
+        - 'create markdown_page content'
+        - 'edit any markdown_page content'
+        - 'edit own markdown_page content'
+        - 'delete any markdown_page content'
+        - 'delete own markdown_page content'
+        - 'view markdown_page revisions'
+        - 'revert markdown_page revisions'
+        - 'delete markdown_page revisions'

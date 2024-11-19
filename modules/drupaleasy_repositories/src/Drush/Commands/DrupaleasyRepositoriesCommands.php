@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\drupaleasy_repositories\Drush\Commands;
 
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesBatch;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService;
@@ -31,6 +32,8 @@ final class DrupaleasyRepositoriesCommands extends DrushCommands {
    *   The custom DrupalEasy batch service.
    * @param \Drupal\queue_ui\QueueUIBatchInterface $queueUiBatch
    *   The Drupal Queue UI module batch service.
+   * @param \Drupal\Core\Cache\CacheTagsInvalidatorInterface $cacheInvalidator
+   *   The Drupal core cache invalidation service.
    */
   public function __construct(
     // Via https://www.drupal.org/node/3396179
@@ -42,6 +45,8 @@ final class DrupaleasyRepositoriesCommands extends DrushCommands {
     private readonly DrupaleasyRepositoriesBatch $batch,
     #[Autowire(service: 'queue_ui.batch')]
     private readonly QueueUIBatchInterface $queueUiBatch,
+    #[Autowire(service: 'cache_tags.invalidator')]
+    private readonly CacheTagsInvalidatorInterface $cacheInvalidator,
   ) {
     parent::__construct();
   }
@@ -90,6 +95,9 @@ final class DrupaleasyRepositoriesCommands extends DrushCommands {
       // Call Queue UI batch manager directly to run all queue items as a batch.
       $this->queueUiBatch->batch(['drupaleasy_repositories_repository_node_updater']);
       drush_backend_batch_process();
+
+      // Invalidate the cache for anything with the drupaleasy_repositories tag.
+      $this->cacheInvalidator->invalidateTags(['drupaleasy_repositories']);
     }
   }
 
