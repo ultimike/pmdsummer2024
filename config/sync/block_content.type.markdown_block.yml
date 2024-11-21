@@ -1,0 +1,10 @@
+uuid: f3ab33ae-dc27-4e5c-a786-3cd2b0d3f6db
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: uBG0t--_-rn_XwlgEuHstnAEODS4iDdU5KfAGEWTtEA
+id: markdown_block
+label: 'Markdown block'
+revision: false
+description: 'Use this to create a block using Markdown syntax.'

@@ -1,0 +1,35 @@
+uuid: 88ffaba5-2154-47e1-99c7-b4cc4ca9217c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.markdown_block
+    - field.field.block_content.markdown_block.body
+  module:
+    - text
+_core:
+  default_config_hash: g9YWbKwuoUBjn1lroplMW6lA9FidDFOtv69oLzqykL8
+id: block_content.markdown_block.default
+targetEntityType: block_content
+bundle: markdown_block
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 26
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,24 @@
+uuid: 1953e12d-ad62-4fb1-8d3e-621fbf04b578
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.markdown_block
+    - field.field.block_content.markdown_block.body
+  module:
+    - text
+_core:
+  default_config_hash: jytv9pVDj3e8xyKuZ-laf-v72AcAPq7DoZ0D3lMm1jQ
+id: block_content.markdown_block.default
+targetEntityType: block_content
+bundle: markdown_block
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

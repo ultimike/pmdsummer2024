@@ -8,9 +8,11 @@ module:
   breakpoint: 0
   ckeditor5: 0
   config: 0
+  config_inspector: 0
   contextual: 0
   datetime: 0
   dblog: 0
+  devel: 0
   drupaleasy_repositories: 0
   dynamic_page_cache: 0
   editor: 0
@@ -19,9 +21,11 @@ module:
   file: 0
   filter: 0
   image: 0
+  key: 0
   layout_builder: 0
   layout_discovery: 0
   link: 0
+  markdown_easy: 0
   menu_link_content: 0
   menu_ui: 0
   mysql: 0
@@ -32,12 +36,15 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  queue_ui: 0
   shortcut: 0
   system: 0
   taxonomy: 0
   text: 0
   token: 0
   toolbar: 0
+  update: 0
+  upgrade_status: 0
   user: 0
   views_ui: 0
   views: 10

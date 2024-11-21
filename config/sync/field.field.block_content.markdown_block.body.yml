@@ -1,0 +1,28 @@
+uuid: a6b8778d-879d-4b72-b823-425bda9e785f
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.markdown_block
+    - field.storage.block_content.body
+    - filter.format.markdown
+  module:
+    - text
+_core:
+  default_config_hash: x41_Wa9FnSUy3W8p2qJoQM7r_n7wvxUIaWN8h4Ana44
+id: block_content.markdown_block.body
+field_name: body
+entity_type: block_content
+bundle: markdown_block
+label: Body
+description: '<a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown basic syntax</a>'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats:
+    - markdown
+field_type: text_with_summary

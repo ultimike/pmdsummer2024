@@ -31,6 +31,7 @@
         "drupal/markdown_easy_entities": "1.0.x-dev",
         "drupal/pathauto": "^1.13",
         "drupal/queue_ui": "^3.2",
+        "drupal/upgrade_status": "^4.3",
         "drupaleasy/drupaleasy_bitbucket": "^1.0",
         "drupaleasy/drupaleasy_notify": "^1.0",
         "drupaleasy/drupaleasy_repositories": "^1.0",
