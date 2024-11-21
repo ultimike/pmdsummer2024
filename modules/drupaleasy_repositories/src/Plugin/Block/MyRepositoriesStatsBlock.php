@@ -80,7 +80,7 @@ final class MyRepositoriesStatsBlock extends BlockBase implements ContainerFacto
       '#cache' => [
         'contexts' => ['timezone', 'user'],
         'tags' => ['node_list:repository', 'drupaleasy_repositories'],
-        'max-age' => 0,
+        'max-age' => Cache::PERMANENT,
       ],
     ];
 
@@ -91,7 +91,7 @@ final class MyRepositoriesStatsBlock extends BlockBase implements ContainerFacto
    * {@inheritDoc}
    */
   public function getCacheMaxAge(): int {
-    return 0;
+    return Cache::PERMANENT;
   }
 
   /**

@@ -31,7 +31,7 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function getRepo(string $uri, Object $client = NULL): array {
+  public function getRepo(string $uri, ?Object $client = NULL): array {
     // Get the repository vendor and name from the $uri parameter.
     $all_parts = parse_url($uri);
     $path_parts = explode('/', $all_parts['path']);
@@ -69,6 +69,12 @@ final class Github extends DrupaleasyRepositoriesPluginBase {
 
   /**
    * Authenticate with GitHub.
+   *
+   * @param \Github\Client $client
+   *   The GitHub client.
+   *
+   * @return \Github\Client
+   *   The GitHub client.
    */
   protected function setAuthentication(Client $client): Client {
     // Get access to the credentials from the Key module.

@@ -20,6 +20,7 @@
     ],
     "require": {
         "composer/installers": "^2.0",
+        "drupal/cache_review": "1.1.x-dev@dev",
         "drupal/config_inspector": "^2.1",
         "drupal/core-composer-scaffold": "^10.3",
         "drupal/core-project-message": "^10.3",
@@ -30,6 +31,7 @@
         "drupal/markdown_easy_entities": "1.0.x-dev",
         "drupal/pathauto": "^1.13",
         "drupal/queue_ui": "^3.2",
+        "drupaleasy/drupaleasy_bitbucket": "^1.0",
         "drupaleasy/drupaleasy_notify": "^1.0",
         "drupaleasy/drupaleasy_repositories": "^1.0",
         "drupaleasy/no_more_hooks": "^1.0",

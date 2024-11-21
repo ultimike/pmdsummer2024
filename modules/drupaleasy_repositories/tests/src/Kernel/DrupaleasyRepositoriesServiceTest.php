@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\drupaleasy_repositories\Kernel;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\KernelTests\KernelTestBase;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService;
 use Drupal\drupaleasy_repositories\Traits\RepositoryContentTypeTrait;
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;

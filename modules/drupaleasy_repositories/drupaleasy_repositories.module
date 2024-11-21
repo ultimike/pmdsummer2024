@@ -126,7 +126,6 @@ function drupaleasy_repositories_cron(): void {
     /** @var Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService $der */
     $der = \Drupal::service('drupaleasy_repositories.service');
     // $users = $der->getUserUpdateList();
-
     // // Create queue items for each user. Cron will process queue items during
     // // future cron runs.
     // $queue = \Drupal::queue('drupaleasy_repositories_repository_node_updater');
