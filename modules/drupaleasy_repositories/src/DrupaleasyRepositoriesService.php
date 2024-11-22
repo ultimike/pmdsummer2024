@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\drupaleasy_repositories;
 
 use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -15,6 +14,7 @@ use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\drupaleasy_repositories\Event\RepoUpdatedEvent;
 use Drupal\node\NodeInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Service class for DrupalEasy Repositories module.
@@ -34,7 +34,7 @@ final class DrupaleasyRepositoriesService {
    *   The Drupal core entity_type.manager service.
    * @param \Drupal\Core\Queue\QueueFactory $queue
    *   The Drupal core queue factory service.
-   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $eventDispatcher
+   * @param \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher
    *   The Drupal core event dispatcher service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   Cache backend.
@@ -48,7 +48,7 @@ final class DrupaleasyRepositoriesService {
     protected ConfigFactoryInterface $configFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected QueueFactory $queue,
-    protected ContainerAwareEventDispatcher $eventDispatcher,
+    protected EventDispatcher $eventDispatcher,
     protected CacheBackendInterface $cache,
     protected TimeInterface $time,
     protected bool $dryRun = FALSE,

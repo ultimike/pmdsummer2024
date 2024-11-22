@@ -6,6 +6,7 @@ namespace Drupal\drupaleasy_repositories\Form;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager;
@@ -23,13 +24,13 @@ final class SettingsForm extends ConfigFormBase {
    *   The factory for configuration objects.
    * @param \Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager $repositoriesManager
    *   Our plugin manager.
-   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typedConfigManager
    *   The typed config manager.
    */
   public function __construct(
     protected ConfigFactoryInterface $config_factory,
     protected DrupaleasyRepositoriesPluginManager $repositoriesManager,
-    protected $typedConfigManager = NULL,
+    protected TypedConfigManagerInterface $typedConfigManager,
   ) {
     parent::__construct($config_factory, $typedConfigManager);
   }

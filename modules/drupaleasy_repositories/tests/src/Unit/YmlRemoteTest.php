@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Drupal\Tests\drupaleasy_repositories\Unit;
 
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Tests\UnitTestCase;
 use Drupal\drupaleasy_repositories\Plugin\DrupaleasyRepositories\YmlRemote;
 use Drupal\key\KeyInterface;
 use Drupal\key\KeyRepositoryInterface;
-use Drupal\Tests\UnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -62,7 +62,7 @@ final class YmlRemoteTest extends UnitTestCase {
     //   ->will($this->returnValue($this->key));
     // $this->key->expects($this->any())
     //   ->method('getKeyValues')
-    //   ->will($this->returnValue(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']));
+    //   ->will($this->returnValue(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']));.
     $this->ymlRemote = new YmlRemote([], 'yml_remote', [], $this->messenger, $this->keyRepository);
   }
 
@@ -83,7 +83,7 @@ final class YmlRemoteTest extends UnitTestCase {
    * @return array<int, array<int, string|bool>>
    *   The values to test and their expected result.
    */
-  public function validateProvider(): array {
+  public static function validateProvider(): array {
     return [
       [
         'A test string',
@@ -143,7 +143,7 @@ final class YmlRemoteTest extends UnitTestCase {
   public function testValidate(string $test_string, bool $expected): void {
     self::assertEquals($expected, $this->ymlRemote->validate($test_string), "Validation of '{$test_string}' does not return '{$expected}'.");
     // This is just an example, it is not testing anything at all.
-    //$this->keyRepository->getKey('blah')->getKeyValues();
+    // $this->keyRepository->getKey('blah')->getKeyValues();
   }
 
   /**

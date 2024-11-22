@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Drupal\Tests\drupaleasy_repositories\Unit;
 
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Tests\UnitTestCase;
 use Drupal\drupaleasy_repositories\Plugin\DrupaleasyRepositories\Github;
 use Drupal\key\KeyInterface;
 use Drupal\key\KeyRepositoryInterface;
-use Drupal\Tests\UnitTestCase;
 use Github\Api\Repo;
 use Github\Client;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -72,10 +72,10 @@ final class GithubTest extends UnitTestCase {
     $this->key = $this->createMock(KeyInterface::class);
     $this->keyRepository->expects($this->any())
       ->method('getKey')
-      ->will($this->returnValue($this->key));
+      ->willReturn($this->key);
     $this->key->expects($this->any())
       ->method('getKeyValues')
-      ->will($this->returnValue(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']));
+      ->willReturn(['username' => 'blah', 'personal_access_token' => 'asdfasdfads']);
 
     // Mock the Github client and repo class and relevant methods.
     $repo_test_array = [
@@ -89,12 +89,12 @@ final class GithubTest extends UnitTestCase {
     $repo = $this->createMock(Repo::class);
     $repo->expects($this->any())
       ->method('show')
-      ->will($this->returnValue($repo_test_array));
+      ->willReturn($repo_test_array);
 
     $this->client = $this->createMock(Client::class);
     $this->client->expects($this->any())
       ->method('api')
-      ->will($this->returnValue($repo));
+      ->willReturn($repo);
 
     // Instantiate the Github plugin using all the fakery.
     $this->github = new Github([], 'github', [], $this->messenger, $this->keyRepository);
@@ -106,7 +106,7 @@ final class GithubTest extends UnitTestCase {
    * @return array<int, array<int, string|bool>>
    *   The values to test and their expected result.
    */
-  public function validateProvider(): array {
+  public static function validateProvider(): array {
     return [
       [
         'A test string',
