@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\drupaleasy_repositories\Kernel;
 
-use Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\drupaleasy_repositories\DrupaleasyRepositories\DrupaleasyRepositoriesPluginManager;
 
 /**
  * Kernel test for our plugin manager.

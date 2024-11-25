@@ -86,7 +86,7 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
       'field_number_of_issues' => $repo['num_open_issues'],
       'field_source' => $repo['source'],
       'field_description' => $repo['description'],
-      'user_id' => $this->adminUser->id(),
+      'uid' => $this->adminUser->id(),
     ]);
     $node->save();
 
@@ -103,10 +103,32 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
    * @return array<int, array<int, bool|array<mixed>>>
    *   Test data and expected results.
    */
-  public function providerTestIsUnique(): array {
+  public static function providerTestIsUnique(): array {
+    $aquaman = [
+      'aquaman-repository' => [
+        'label' => 'The Aquaman repository',
+        'description' => 'This is where Aquaman keeps all his crime-fighting code.',
+        'num_open_issues' => 6,
+        'source' => 'yml_remote',
+        'url' => 'http://example.com/aquaman-repo.yml',
+      ],
+    ];
+
+    $superman = [
+      'superman-repository' => [
+        'label' => 'The Superman repository',
+        'description' => 'This is where Superman keeps all his fortress of solitude code.',
+        'num_open_issues' => 0,
+        'source' => 'yml_remote',
+        'url' => 'http://example.com/superman-repo.yml',
+      ],
+    ];
+
     return [
-      [FALSE, $this->getTestRepo('aquaman')],
-      [TRUE, $this->getTestRepo('superman')],
+      [TRUE, $aquaman, 1],
+      [FALSE, $aquaman, 999],
+      [TRUE, $superman, 1],
+      [TRUE, $superman, 999],
     ];
   }
 
@@ -117,20 +139,21 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
    *   The expected value.
    * @param array<mixed> $repo
    *   The repository to be tested.
+   * @param int $uid
+   *   The User ID to test.
    *
    * @covers \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService::isUnique
    * @dataProvider providerTestIsUnique
    * @test
    */
-  public function testIsUnique(bool $expected, array $repo): void {
+  public function testIsUnique(bool $expected, array $repo, int $uid): void {
     // Use reflection to make isUnique() "public".
     $reflection_is_unique = new \ReflectionMethod($this->drupaleasyRepositoriesService, 'isUnique');
     // Not necessary for PHP 8.1 or later.
     $reflection_is_unique->setAccessible(TRUE);
     $actual = $reflection_is_unique->invokeArgs(
       $this->drupaleasyRepositoriesService,
-      // Use $uid = 999 to ensure it is different from $this->adminUser.
-      [$repo, 999]
+      [$repo, $uid]
     );
 
     $repo = reset($repo);
@@ -143,7 +166,7 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
    * @return array<mixed>
    *   Test data and expected results.
    */
-  public function providerValidateRepositoryUrls(): array {
+  public static function providerValidateRepositoryUrls(): array {
     // This is run before setup() and other things so $this->container
     // isn't available here!
     return [
