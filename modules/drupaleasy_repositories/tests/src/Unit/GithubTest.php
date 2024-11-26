@@ -11,6 +11,7 @@ use Drupal\key\KeyInterface;
 use Drupal\key\KeyRepositoryInterface;
 use Github\Api\Repo;
 use Github\Client;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -139,10 +140,10 @@ final class GithubTest extends UnitTestCase {
    * @param bool $expected
    *   The expected result.
    *
-   * @dataProvider validateProvider
    * @covers Github::validate
    * @test
    */
+  #[DataProvider('validateProvider')]
   public function testValidate(string $test_string, bool $expected): void {
     self::assertEquals($expected, $this->github->validate($test_string), "Validation of '{$test_string}' does not return '{$expected}'.");
     // This is just an example, it is not testing anything at all.

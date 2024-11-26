@@ -11,6 +11,7 @@ use Drupal\drupaleasy_repositories\Traits\RepositoryContentTypeTrait;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Test description.
@@ -143,9 +144,9 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
    *   The User ID to test.
    *
    * @covers \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService::isUnique
-   * @dataProvider providerTestIsUnique
    * @test
    */
+  #[DataProvider('providerTestIsUnique')]
   public function testIsUnique(bool $expected, array $repo, int $uid): void {
     // Use reflection to make isUnique() "public".
     $reflection_is_unique = new \ReflectionMethod($this->drupaleasyRepositoriesService, 'isUnique');
@@ -184,9 +185,9 @@ final class DrupaleasyRepositoriesServiceTest extends KernelTestBase {
    *   The repository to be tested.
    *
    * @covers \Drupal\drupaleasy_repositories\DrupaleasyRepositoriesService::validateRepositoryUrls
-   * @dataProvider providerValidateRepositoryUrls
    * @test
    */
+  #[DataProvider('providerValidateRepositoryUrls')]
   public function testValidateRepositoryUrls(string $expected, array $urls): void {
     // Get the full path to the test .yml file.
     /** @var \Drupal\Core\Extension\Extension $module */

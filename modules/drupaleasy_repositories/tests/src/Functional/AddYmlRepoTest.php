@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\drupaleasy_repositories\Functional;
 
-use Drupal\drupaleasy_repositories\Traits\RepositoryContentTypeTrait;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\drupaleasy_repositories\Traits\RepositoryContentTypeTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -158,7 +158,7 @@ final class AddYmlRepoTest extends BrowserTestBase {
 
     // We can't check for the following message unless we also have the future
     // drupaleasy_notify module enabled.
-    //$session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been created');
+    // $session->responseContains('The repo named <em class="placeholder">The Batman repository</em> has been created');
     // Find the new repository node.
     $query = \Drupal::entityQuery('node');
     $query->condition('type', 'repository');
